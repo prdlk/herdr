@@ -31,6 +31,89 @@ Plugins run as your user with no sandbox. `herdr plugin install` previews what i
 
 `plugins.json` is herdr's own plugin registry; it records each install's source, pinned commit, and absolute checkout path (under `/home/prad`). Leave it to herdr rather than editing by hand.
 
+## Running it in kitty
+
+herdr runs in any terminal, but I recommend [kitty](https://sw.kovidgoyal.net/kitty/) for this config:
+
+- **Images in panes.** herdr renders the [kitty graphics protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/) in compatible outer terminals (on here via `kitty_graphics = true`), so image previews from tools like yazi work inside panes.
+- **Translucency.** `panel_bg = "reset"` lets kitty's `background_opacity` and your compositor's blur show through herdr.
+- **Chords as keys.** kitty's `send_text` maps one shortcut to the `ctrl+b` prefix byte plus a key, so herdr actions get single-chord shortcuts.
+
+### Install kitty and the font
+
+```sh
+# Arch
+pacman -S kitty ttf-victor-mono-nerd
+# macOS
+brew install --cask kitty font-victor-mono-nerd-font
+```
+
+The config uses VictorMono Nerd Font Mono. The plugins and the sidebar use Nerd Font icons, so pick some Nerd Font if you swap it out.
+
+### A kitty config that hosts herdr
+
+herdr gets its own kitty config instead of sharing your everyday one. kitty becomes a plain window: no tab bar, and every window opens straight into herdr. Mine is [`herdr.conf` in prdlk/kitty](https://github.com/prdlk/kitty/blob/main/herdr.conf). Copy it to `~/.config/kitty/herdr.conf`, or start from these essentials:
+
+```conf
+# ~/.config/kitty/herdr.conf
+font_family      family="VictorMono Nerd Font Mono"
+background_opacity 0.9
+hide_window_decorations yes
+window_padding_width 8
+allow_remote_control socket-only
+confirm_os_window_close 0
+
+# herdr draws its own sidebar and tab strip
+tab_bar_style hidden
+
+# Launch or attach the persistent herdr session; closing the window only detaches
+shell herdr
+
+# Leave ctrl+h/j/k/l unmapped: vim-herdr-navigation handles them inside herdr
+```
+
+Run it with:
+
+```sh
+kitty --class=kitty-herdr --config ~/.config/kitty/herdr.conf
+```
+
+`--class` sets the window class / Wayland app-id (`kitty-herdr`), so compositor rules can target herdr windows. It has to be on the command line: kitty ignores `class` in a config file.
+
+Bind that command in your window manager or desktop launcher. It has to start a separate kitty process, because kitty's `launch` action can't take `--config`. From inside another kitty, map it as a background launch. My [tmux host config](https://github.com/prdlk/kitty/blob/main/tmux.conf) uses `ctrl+shift+a`:
+
+```conf
+map ctrl+shift+a launch --type=background --cwd=current kitty --class=kitty-herdr --config ~/.config/kitty/herdr.conf
+```
+
+The last line of my `herdr.conf` includes the active [Omarchy](https://omarchy.org) theme (`include ~/.local/state/omarchy/current/theme/kitty.conf`). On other systems, replace it with your own color scheme, such as kitty's cyberdream theme.
+
+### Chord shortcuts
+
+`herdr.conf` turns kitty chords into herdr prefix sequences with `send_text all \x02<key>`. `\x02` is `ctrl+b`, and an uppercase letter is the shift variant (`\x02N` is `prefix shift+n`).
+
+| kitty key | Sends | herdr action |
+| --- | --- | --- |
+| `super+t`, `ctrl+shift+t` | `prefix c` | New tab |
+| `ctrl+shift+h` / `ctrl+shift+l` | `prefix p` / `prefix n` | Previous / next tab |
+| `ctrl+shift+j` / `ctrl+shift+k` | `prefix j` / `prefix k` | Next / previous workspace |
+| `ctrl+shift+n` | `prefix shift+n` | New workspace |
+| `super+n` | `prefix shift+g` | New git worktree |
+| `ctrl+shift+w` | `prefix shift+w` | Rename workspace |
+| `ctrl+shift+r` | `prefix shift+t` | Rename tab |
+| `ctrl+shift+q` | `prefix x` | Close pane |
+| `super+z` | `prefix z` | Zoom pane |
+| `ctrl+tab` / `ctrl+shift+tab` | `prefix .` / `prefix ,` | Next / previous agent |
+| `ctrl+shift+e` | `prefix e` | Toggle nvim sidebar |
+| `ctrl+shift+o` | `prefix o` | Open file from agent output |
+| `ctrl+space` | `prefix t` | Switchboard menu |
+| `ctrl+shift+f` | `prefix shift+k` | Switchboard projects |
+| `ctrl+shift+g` | `prefix shift+l` | Switchboard git |
+| `ctrl+shift+p` | `prefix shift+p` | Switchboard commands |
+| `ctrl+shift+,` | `prefix shift+s` | herdr settings |
+
+It also maps `super+c` / `super+v` to copy / paste, and `ctrl+plus` / `ctrl+minus` / `ctrl+0` to font size. `ctrl+shift+alt+,` reloads the kitty config, since herdr settings took `ctrl+shift+,`.
+
 ## Files
 
 | Path | What it is |
@@ -73,7 +156,7 @@ The prefix is herdr's default, `ctrl+b`.
 | `prefix y` | Browser in a right split |
 | `prefix shift+o` | Browser overlay |
 
-The `ctrl+b` prefix is the same one tmux uses, so a terminal that sends the `\x02` prefix byte for its own chords works the same with either multiplexer. My kitty and Ghostty configs do this.
+The `ctrl+b` prefix is the same one tmux uses, so terminal chords that send the `\x02` prefix byte work with either multiplexer. See [Chord shortcuts](#chord-shortcuts) for the kitty mappings.
 
 ## Plugins
 
