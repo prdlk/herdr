@@ -1,0 +1,154 @@
+onboarding = false
+
+[ui]
+# Borderless, like the compositor: panes are told apart by the gap between them
+# and by the terminal background, not by a drawn frame. Hyprland already puts a
+# gradient border around the window; a second frame inside it is noise.
+pane_borders = false
+pane_outer_borders = false
+prompt_new_tab_name = false
+accent = "#5ea1ff"
+
+status_indicators = "symbols"
+[theme]
+name = "terminal"
+auto_switch = false
+
+[theme.custom]
+# Panes keep the terminal's own background, so kitty's translucency, and the
+# Hyprland blur under it, survive inside herdr.
+panel_bg = "reset"
+
+# Surfaces: bg for the spaces rail, bg_alt for the row under the cursor,
+# bg_highlight for selection — the same three-step ramp as the rest of the theme.
+sidebar_bg = "#16181a"
+active_row_bg = "#1e2124"
+selection_bg = "#3c4048"
+
+# `accent` fills the active tab and `surface_dim` writes its label, so the pair
+# is set to the same plate kitty's tab bar uses: the accent mixed 20% into the
+# background, with the accent itself for the title. A raw #5ea1ff fill would put
+# a neon block above the panes and swallow the label.
+accent = "#243348"
+surface_dim = "#5ea1ff"
+
+# Agent-state marks.
+green = "#5eff6c"
+yellow = "#f1ff5e"
+red = "#ff6e5e"
+peach = "#ffbd5e"
+mauve = "#bd5eff"
+
+[ui.toast]
+delivery = "system"
+
+[keys]
+# tmux-style bindings (prefix is the leader, default ctrl+b)
+split_vertical = "prefix+%"
+split_horizontal = 'prefix+"'
+detach = "prefix+d"
+
+# leader+s opens the workspace ("spaces") picker (settings moves off prefix+s to make room)
+workspace_picker = "prefix+s"
+settings = "prefix+shift+s"
+
+# vim-style j/k move the selection up/down inside the spaces picker
+# (frees pane up/down in navigate mode; use arrows or ctrl+b j/k for pane focus)
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
+navigate_pane_up = ""
+navigate_pane_down = ""
+
+# leader+. / leader+, step to the next / previous agent in the panel
+next_agent = "prefix+."
+previous_agent = "prefix+,"
+
+# leader+j / leader+k cycle next / previous workspace (driven by ghostty
+# ctrl+shift+j/k). Frees prefix+j/k from pane focus, which moves to arrows;
+# directional pane movement is also on ctrl+hjkl via vim-herdr-navigation.
+next_workspace = "prefix+j"
+previous_workspace = "prefix+k"
+focus_pane_up = "prefix+up"
+focus_pane_down = "prefix+down"
+focus_pane_left = "prefix+left"
+focus_pane_right = "prefix+right"
+
+# leader+a focuses the agent panel for keyboard browsing
+# (j/k to move, enter to jump, esc to leave) — needs the rebuilt binary
+
+[experimental]
+pane_history = false
+kitty_graphics = true
+
+switch_ascii_input_source_in_prefix = true
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+description = "navigate left (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+description = "navigate down (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+description = "navigate up (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"
+description = "navigate right (vim/herdr)"
+
+[[keys.command]]
+key = "prefix+e"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "nvim sidebar (left of current panes; see ~/.config/herdr-nvim/config.toml)"
+
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "open file from agent output"
+
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "switchboard.menu"
+description = "Switchboard menu"
+
+[[keys.command]]
+key = "prefix+shift+p"
+type = "plugin_action"
+command = "switchboard.commands"
+description = "Switchboard commands"
+
+[[keys.command]]
+key = "prefix+shift+l"
+type = "plugin_action"
+command = "switchboard.git"
+description = "Switchboard git"
+
+[[keys.command]]
+key = "prefix+shift+k"
+type = "plugin_action"
+command = "switchboard.projects"
+description = "Switchboard projects"
+
+[[keys.command]]
+key = "prefix+y"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" plugin pane open --plugin official.browser --entrypoint browser --placement split --direction right --focus'
+description = "open browser in right split"
+
+[[keys.command]]
+key = "prefix+shift+o"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" plugin pane open --plugin official.browser --entrypoint browser --placement overlay --focus'
+description = "open browser overlay"

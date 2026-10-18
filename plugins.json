@@ -1,0 +1,1005 @@
+[
+  {
+    "plugin_id": "chmarax.herdr-nvim",
+    "name": "herdr-nvim",
+    "version": "0.1.1",
+    "min_herdr_version": "0.7.4",
+    "description": "Full-height nvim sidebar with agent annotations: toggle with one key, comment code, send to any agent.",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/chmarax.herdr-nvim-178624809c23/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/chmarax.herdr-nvim-178624809c23",
+    "enabled": true,
+    "platforms": [
+      "macos",
+      "linux"
+    ],
+    "build": [
+      {
+        "command": [
+          "bash",
+          "herdr/install.sh"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "open-link",
+        "title": "nvim sidebar: open clicked file",
+        "command": [
+          "sh",
+          "-c",
+          "exec sh \"$HERDR_PLUGIN_ROOT/herdr/run.sh\" open-link"
+        ]
+      },
+      {
+        "id": "pick-file",
+        "title": "nvim sidebar: open file from agent output",
+        "contexts": [
+          "pane"
+        ],
+        "command": [
+          "sh",
+          "-c",
+          "exec sh \"$HERDR_PLUGIN_ROOT/herdr/run.sh\" pick-file"
+        ]
+      },
+      {
+        "id": "toggle",
+        "title": "nvim sidebar: toggle",
+        "contexts": [
+          "pane",
+          "workspace"
+        ],
+        "command": [
+          "sh",
+          "-c",
+          "exec sh \"$HERDR_PLUGIN_ROOT/herdr/run.sh\" toggle"
+        ]
+      }
+    ],
+    "panes": [
+      {
+        "id": "picker",
+        "title": "open file",
+        "placement": "popup",
+        "command": [
+          "sh",
+          "-c",
+          "exec sh \"$HERDR_PLUGIN_ROOT/herdr/run.sh\" picker"
+        ]
+      }
+    ],
+    "link_handlers": [
+      {
+        "id": "file-path",
+        "title": "Open in nvim sidebar",
+        "pattern": "^~?[\\w.@/()\\[\\]+-]+/[\\w.@()\\[\\]+-]+\\.[A-Za-z]\\w*(?::\\d+){0,2}$",
+        "action": "open-link"
+      },
+      {
+        "id": "file-url",
+        "title": "Open in nvim sidebar",
+        "pattern": "^file://",
+        "action": "open-link"
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "ChmaraX",
+      "repo": "herdr-nvim",
+      "requested_ref": "40aadeab3cef3702ef5e05069181c7168084794f",
+      "resolved_commit": "40aadeab3cef3702ef5e05069181c7168084794f",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/chmarax.herdr-nvim-178624809c23",
+      "installed_unix_ms": 1788185347514
+    }
+  },
+  {
+    "plugin_id": "herdr-automatic-rename",
+    "name": "Herdr Automatic Rename",
+    "version": "0.7.3",
+    "min_herdr_version": "0.7.1",
+    "description": "Auto-name tabs after the foreground program and/or prefix workspaces, tabs, and agents with their 1-9 jump-key number. Each feature toggles via config.sh.",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/herdr-automatic-rename-db02a35e1e35/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/herdr-automatic-rename-db02a35e1e35",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "startup": [
+      {
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "startup"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "clear",
+        "title": "Herdr Automatic Rename: strip all number prefixes",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "--clear"
+        ]
+      },
+      {
+        "id": "reset",
+        "title": "Reset tab to automatic naming",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "reset"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "pane.agent_detected",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.agent_detected"
+        ]
+      },
+      {
+        "on": "pane.agent_status_changed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.agent_status_changed"
+        ]
+      },
+      {
+        "on": "pane.closed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.closed"
+        ]
+      },
+      {
+        "on": "pane.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.created"
+        ]
+      },
+      {
+        "on": "pane.exited",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.exited"
+        ]
+      },
+      {
+        "on": "pane.focused",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.focused"
+        ]
+      },
+      {
+        "on": "pane.moved",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "pane.moved"
+        ]
+      },
+      {
+        "on": "tab.closed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.closed"
+        ]
+      },
+      {
+        "on": "tab.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.created"
+        ]
+      },
+      {
+        "on": "tab.focused",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.focused"
+        ]
+      },
+      {
+        "on": "tab.moved",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.moved"
+        ]
+      },
+      {
+        "on": "tab.renamed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "tab.renamed"
+        ]
+      },
+      {
+        "on": "workspace.closed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.closed"
+        ]
+      },
+      {
+        "on": "workspace.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.created"
+        ]
+      },
+      {
+        "on": "workspace.moved",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.moved"
+        ]
+      },
+      {
+        "on": "workspace.renamed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.renamed"
+        ]
+      },
+      {
+        "on": "workspace.reordered",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "workspace.reordered"
+        ]
+      },
+      {
+        "on": "worktree.created",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "worktree.created"
+        ]
+      },
+      {
+        "on": "worktree.opened",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "worktree.opened"
+        ]
+      },
+      {
+        "on": "worktree.removed",
+        "command": [
+          "bash",
+          "automatic-rename.sh",
+          "worktree.removed"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "qu8n",
+      "repo": "herdr-automatic-rename",
+      "resolved_commit": "11cbee3aa54ea3a507550e4f58a2727de2b119eb",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/herdr-automatic-rename-db02a35e1e35",
+      "installed_unix_ms": 1788185927457
+    }
+  },
+  {
+    "plugin_id": "io.github.salemsayed.omaherd",
+    "name": "Omaherd",
+    "version": "0.6.5",
+    "min_herdr_version": "0.7.0",
+    "description": "Tells the Omarchy bar the moment an agent changes state.",
+    "manifest_path": "/home/prad/.config/omarchy/plugins/io.github.salemsayed.omaherd/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/omarchy/plugins/io.github.salemsayed.omaherd",
+    "enabled": true,
+    "platforms": [
+      "linux"
+    ],
+    "events": [
+      {
+        "on": "pane.agent_detected",
+        "command": [
+          "./omaherd-hook"
+        ]
+      },
+      {
+        "on": "pane.agent_status_changed",
+        "command": [
+          "./omaherd-hook"
+        ]
+      },
+      {
+        "on": "pane.closed",
+        "command": [
+          "./omaherd-hook"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "local"
+    }
+  },
+  {
+    "plugin_id": "official.browser",
+    "name": "Browser",
+    "version": "0.1.0",
+    "min_herdr_version": "0.7.4",
+    "description": "Open and inspect real browser pages from Herdr.",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/official.browser-ff2a44eccae9/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/official.browser-ff2a44eccae9",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "actions": [
+      {
+        "id": "open-localhost",
+        "title": "Open localhost in browser",
+        "contexts": [
+          "workspace"
+        ],
+        "command": [
+          "bun",
+          "run",
+          "src/actions/open-localhost.ts"
+        ]
+      },
+      {
+        "id": "status",
+        "title": "Browser status",
+        "contexts": [
+          "workspace"
+        ],
+        "command": [
+          "bun",
+          "run",
+          "src/actions/status.ts"
+        ]
+      }
+    ],
+    "panes": [
+      {
+        "id": "browser",
+        "title": "Browser",
+        "placement": "split",
+        "command": [
+          "bun",
+          "run",
+          "src/viewer.ts"
+        ]
+      }
+    ],
+    "link_handlers": [
+      {
+        "id": "localhost",
+        "title": "Open in Herdr Browser",
+        "pattern": "^https?://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:[0-9]+)?([/?#].*)?$",
+        "action": "open-localhost"
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "ogulcancelik",
+      "repo": "herdr-browser",
+      "requested_ref": "be6888b71cf4eb5939ee79a746bd1a1c22ade046",
+      "resolved_commit": "be6888b71cf4eb5939ee79a746bd1a1c22ade046",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/official.browser-ff2a44eccae9",
+      "installed_unix_ms": 1788185376536
+    }
+  },
+  {
+    "plugin_id": "oh-my-opencode-slim",
+    "name": "oh-my-opencode-slim",
+    "version": "2.2.14",
+    "min_herdr_version": "0.8.0",
+    "description": "OpenCode agent orchestration plugin with a Herdr multiplexer adapter",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/oh-my-opencode-slim-023b9f29d9fc/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/oh-my-opencode-slim-023b9f29d9fc",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "alvinunreal",
+      "repo": "oh-my-opencode-slim",
+      "requested_ref": "220eb2be677cb739f795b97a62909110e04ebfc5",
+      "resolved_commit": "220eb2be677cb739f795b97a62909110e04ebfc5",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/oh-my-opencode-slim-023b9f29d9fc",
+      "installed_unix_ms": 1788185387698
+    }
+  },
+  {
+    "plugin_id": "persiyanov.reviewr",
+    "name": "reviewr",
+    "version": "0.30.1",
+    "min_herdr_version": "0.7.5",
+    "description": "Review agent-written diffs beside the chat and add line comments to the agent input.",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/persiyanov.reviewr-e87b654a74f8/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/persiyanov.reviewr-e87b654a74f8",
+    "enabled": true,
+    "platforms": [
+      "macos",
+      "linux"
+    ],
+    "build": [
+      {
+        "command": [
+          "bash",
+          "herdr/install.sh"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "close",
+        "title": "reviewr: close pane",
+        "contexts": [
+          "pane",
+          "workspace"
+        ],
+        "command": [
+          "bash",
+          "herdr/pane.sh",
+          "close"
+        ]
+      },
+      {
+        "id": "open",
+        "title": "reviewr: open pane",
+        "contexts": [
+          "pane",
+          "workspace"
+        ],
+        "command": [
+          "bash",
+          "herdr/pane.sh",
+          "open"
+        ]
+      },
+      {
+        "id": "toggle",
+        "title": "reviewr: toggle pane",
+        "contexts": [
+          "pane",
+          "workspace"
+        ],
+        "command": [
+          "bash",
+          "herdr/pane.sh",
+          "toggle"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "worktree.created",
+        "command": [
+          "bash",
+          "herdr/pane.sh",
+          "auto-open"
+        ]
+      }
+    ],
+    "panes": [
+      {
+        "id": "pane",
+        "title": "reviewr",
+        "placement": "split",
+        "command": [
+          "sh",
+          "-c",
+          "exec \"$HERDR_PLUGIN_ROOT/bin/herdr-reviewr\""
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "persiyanov",
+      "repo": "herdr-reviewr",
+      "requested_ref": "792b4b31475ddbf263ee4d421a984e7418031506",
+      "resolved_commit": "792b4b31475ddbf263ee4d421a984e7418031506",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/persiyanov.reviewr-e87b654a74f8",
+      "installed_unix_ms": 1788185404152
+    }
+  },
+  {
+    "plugin_id": "rjyo.window-title-sync",
+    "name": "Window Title Sync",
+    "version": "0.1.0",
+    "min_herdr_version": "0.7.0",
+    "description": "Sync the outer terminal title to the focused Herdr workspace, tab, and agent session.",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/rjyo.window-title-sync-aa963fbbc3d9/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/rjyo.window-title-sync-aa963fbbc3d9",
+    "enabled": true,
+    "platforms": [
+      "macos",
+      "linux"
+    ],
+    "actions": [
+      {
+        "id": "refresh",
+        "title": "Refresh terminal title",
+        "contexts": [
+          "workspace",
+          "tab",
+          "pane"
+        ],
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "on": "pane.agent_detected",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "pane.agent_status_changed",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "pane.closed",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "pane.created",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "pane.focused",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "pane.moved",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "tab.focused",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "tab.renamed",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "workspace.focused",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "workspace.renamed",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      },
+      {
+        "on": "workspace.updated",
+        "command": [
+          "bun",
+          "sync-title.js"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "rjyo",
+      "repo": "herdr-window-title-sync",
+      "requested_ref": "b07f1140b7308d66487b2f4be546c0c7db065569",
+      "resolved_commit": "b07f1140b7308d66487b2f4be546c0c7db065569",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/rjyo.window-title-sync-aa963fbbc3d9",
+      "installed_unix_ms": 1788185435070
+    }
+  },
+  {
+    "plugin_id": "switchboard",
+    "name": "Switchboard",
+    "version": "1.0.0",
+    "min_herdr_version": "0.7.4",
+    "description": "A colorful Herdr command palette with searchable Projects, Commands, and Ports pickers plus Git, Clone, Settings, Changelog, and Update utilities.",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/switchboard-487537935c92/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/switchboard-487537935c92",
+    "enabled": true,
+    "platforms": [
+      "macos",
+      "linux"
+    ],
+    "actions": [
+      {
+        "id": "changelog",
+        "title": "Switchboard Changelog",
+        "description": "Read what changed in this plugin, including the version you have installed.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "clone",
+        "title": "Clone Repository",
+        "description": "Clone a repository with ghq get (from clipboard or a prompt), then open it.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "commands",
+        "title": "Commands",
+        "description": "Search shell history and presets, then fill or run the exact command.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "git",
+        "title": "Git Menu",
+        "description": "Open the git menu for the current repo in its own pane: review the worktree, a branch, or a commit with tuicr, or stage with lazygit.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "menu",
+        "title": "Switchboard Menu",
+        "description": "Open the central menu for every Switchboard picker and utility.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "open-split",
+        "title": "Open Repo in Split",
+        "description": "Pick a repo; Enter opens it in a split of the current pane.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "open-tab",
+        "title": "Open Repo in Tab",
+        "description": "Pick a repo; Enter opens it in a new tab.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "open-workspace",
+        "title": "Open Repo in Workspace",
+        "description": "Pick a repo; Enter opens it in a new workspace.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "ports",
+        "title": "Ports",
+        "description": "Inspect live TCP listeners and safely act on their owner processes.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "projects",
+        "title": "Projects",
+        "description": "Open the switcher over running agents, open workspaces, ghq repositories, and linked worktrees.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "settings",
+        "title": "Switchboard Settings",
+        "description": "Configure the common, projects, commands, and ports modes.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      },
+      {
+        "id": "update",
+        "title": "Update Switchboard",
+        "description": "Install the newest tagged version of this plugin. Refuses to touch a linked checkout.",
+        "contexts": [
+          "global",
+          "pane"
+        ],
+        "command": [
+          "bash",
+          "bin/action.sh"
+        ]
+      }
+    ],
+    "panes": [
+      {
+        "id": "changelog",
+        "title": "Switchboard Changelog",
+        "placement": "popup",
+        "width": 88,
+        "height": 28,
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/changelog.sh\""
+        ]
+      },
+      {
+        "id": "clone",
+        "title": "Clone Repository",
+        "placement": "overlay",
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/get.sh\""
+        ]
+      },
+      {
+        "id": "commands",
+        "title": "󰆍",
+        "placement": "overlay",
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/picker.sh\" --commands"
+        ]
+      },
+      {
+        "id": "git",
+        "title": "󰊢",
+        "placement": "overlay",
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/git.sh\""
+        ]
+      },
+      {
+        "id": "menu",
+        "title": "󰍜",
+        "placement": "popup",
+        "width": 76,
+        "height": 24,
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/picker.sh\" --menu"
+        ]
+      },
+      {
+        "id": "ports",
+        "title": "󰛳",
+        "placement": "overlay",
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/picker.sh\" --ports"
+        ]
+      },
+      {
+        "id": "projects",
+        "title": "󰊢",
+        "placement": "overlay",
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/picker.sh\""
+        ]
+      },
+      {
+        "id": "settings",
+        "title": "Switchboard Settings",
+        "placement": "popup",
+        "width": 100,
+        "height": 32,
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/picker.sh\" --settings"
+        ]
+      },
+      {
+        "id": "update",
+        "title": "Update Switchboard",
+        "placement": "overlay",
+        "command": [
+          "bash",
+          "-c",
+          "exec bash \"$HERDR_PLUGIN_ROOT/bin/update-plugin.sh\""
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "crafts69guy",
+      "repo": "herdr-switchboard",
+      "requested_ref": "b68d053b6fe54b8e0bcb46a90ed36135da57b4d3",
+      "resolved_commit": "b68d053b6fe54b8e0bcb46a90ed36135da57b4d3",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/switchboard-487537935c92",
+      "installed_unix_ms": 1788185445497
+    }
+  },
+  {
+    "plugin_id": "vim-herdr-navigation",
+    "name": "Vim Herdr Navigation",
+    "version": "0.1.0",
+    "min_herdr_version": "0.7.0",
+    "description": "Seamless Ctrl+h/j/k/l navigation across herdr panes and Vim/Neovim splits",
+    "manifest_path": "/home/prad/.config/herdr/plugins/github/vim-herdr-navigation-a8bf42123d81/herdr-plugin.toml",
+    "plugin_root": "/home/prad/.config/herdr/plugins/github/vim-herdr-navigation-a8bf42123d81",
+    "enabled": true,
+    "platforms": [
+      "linux",
+      "macos"
+    ],
+    "actions": [
+      {
+        "id": "down",
+        "title": "Navigate down (Vim/herdr)",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "navigate.sh",
+          "down"
+        ]
+      },
+      {
+        "id": "left",
+        "title": "Navigate left (Vim/herdr)",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "navigate.sh",
+          "left"
+        ]
+      },
+      {
+        "id": "right",
+        "title": "Navigate right (Vim/herdr)",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "navigate.sh",
+          "right"
+        ]
+      },
+      {
+        "id": "up",
+        "title": "Navigate up (Vim/herdr)",
+        "contexts": [
+          "global"
+        ],
+        "command": [
+          "bash",
+          "navigate.sh",
+          "up"
+        ]
+      }
+    ],
+    "source": {
+      "kind": "github",
+      "owner": "paulbkim-dev",
+      "repo": "vim-herdr-navigation",
+      "resolved_commit": "79679dacc791f70fc34de8b29a3cf9706c0f5b2f",
+      "managed_path": "/home/prad/.config/herdr/plugins/github/vim-herdr-navigation-a8bf42123d81",
+      "installed_unix_ms": 1788185484043
+    }
+  }
+]
