@@ -1,2 +1,6 @@
 # Plugin checkouts installed by herdr at runtime
 plugins/github/
+
+# Runtime files herdr writes into its config dir
+herdr-server.log
+release-notes.json
